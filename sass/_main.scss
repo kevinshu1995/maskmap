@@ -1,8 +1,135 @@
-html,body{
-  width: 100%;
-  height: 100%;
-}
 #map{
   width: 100vw;
   height: 100%;
+  font-family: $font-family;
+}
+
+//sidebar====================================
+.sidebar{
+  position: relative;
+  color: $color-content;
+  font-family: $font-family;
+  .sidebar__title{
+    margin-bottom: .5em;
+    font-weight: 900;
+    @include font-size(22);
+    letter-spacing: .1em;
+  }
+  .search{
+    padding: 16px 0; 
+  }
+}
+//sidebar-標語區==================
+.sidebar__note{
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 100%;
+  padding: 16px 24px;
+  background: $color-bg;
+  mark{
+    font-weight: 900;
+    color: $color-pri;
+    background-color: transparent;
+    @include font-size(24);
+    padding: 0 .2em;
+  }
+  h2{
+    @include font-size(18);
+  }
+  h3{
+    margin-top: .5em;
+    @include font-size(14);
+  }
+}
+//sidebar-搜尋區==================
+.search{
+  margin-top: 160px;
+}
+//sidebar-搜尋區-選單=============
+.selectwrap{
+  .select__row{//包裹 select zone
+    border: 1px solid $color-unselect;
+    border-radius: 3em;
+    margin-bottom: 1em;
+  }
+  legend{
+    margin-left: 22px;
+    padding: 0 .8em;
+    letter-spacing: .1em;
+    @include font-size(12)
+  }
+  .countryForm{ // select zone
+    width: 100%;
+    min-width: 100px;
+    padding: .3em 1.5em .5em;
+    letter-spacing: .1em;
+    @include font-size(18);
+    border: none;
+    outline: none;
+    background-color: transparent;
+    border-radius: 4px;
+  }
+  
+}
+//sidebar-搜尋區-口罩=============
+.select__maskType{
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  label{
+    width: 30%;
+    float: left;
+  }
+  h2{
+    display: inline-block;
+    width: 100%;
+    height: 100%;
+    text-align: center;
+    padding: .5em 0;
+    color: darken($color-unselect, 40%);
+    border-radius: 2em;
+    border: 1px solid $color-unselect;
+  }
+  input{
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 0;
+    height: 0;
+    opacity: 0;
+  }
+  input:checked ~ h2{
+    color: $color-white;
+    background: linear-gradient(45deg,$color-pri-s,$color-pri);
+    border: none;
+    transition: .3s;
+  }
+}
+//sidebar-清單區==================
+
+
+
+
+//地圖上的popup
+.l-popupWrap{
+  line-height: 2em;
+  .l-popup__name{
+    letter-spacing: .1em;
+    @include font-size(18);
+  }
+  input{
+    padding: .3em .5em;
+    border-radius: .4em;
+    @include font-size(18);
+    background-color: $color-pri;
+    color: $color-black;
+    &:hover{
+      background-color: darken($color-pri,10%);
+    }
+  }
+  
+  .l-popup__detail{
+    margin: 1em 0;
+  }
 }

@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="zh-tw">
 
 <head>
   <meta charset="UTF-8">
@@ -9,14 +9,75 @@
   <link rel="stylesheet" href="https://unpkg.com/leaflet@1.6.0/dist/leaflet.css"
     integrity="sha512-xwE/Az9zrjBIphAcBb3F6JVqxf46+CDLwfLMHloNu6KEQCAWi6HcDUbeOfBIptF7tcCzusKFjFw2yuvEpDL9wQ=="
     crossorigin="" />
+  <!-- <link rel="stylesheet" href="source/L.Control.Sidebar.css" /> -->
   <link rel="stylesheet" href="dist/style/all.min.css">
 </head>
 
 <body>
+  <div id="sidebar" class="sidebar">
+    <div class="sidebar__note">
+      <h2>每<mark>7</mark>天購買<mark>1</mark>次口罩</h2>
+      <h2>一張健保卡限購<mark>2</mark>片口罩</h2>
+      <h2>持健保卡最多可代購<mark>1</mark>張</h2>
+      <h3>請把資源留給需要的人喔！</h3>
+    </div>
+    <div class="search">
+      <h2 class="sidebar__title">搜尋</h2>
+      <div class="selectwrap">
+        <fieldset class="select__row">
+          <legend>縣市</legend>
+          <select name="" id="countryForm" class="countryForm">
+            <option value=""></option>
+          </select>
+        </fieldset>
+        <fieldset class="select__row">
+          <legend>鄉鎮市區</legend>
+          <select name="" id="countryForm" class="countryForm">
+            <option value="">123</option>
+          </select>
+        </fieldset>
+        <form class="select__maskType">
+          <label for="mask__adult">
+            <input type="radio" value="mask__adult" name="maskType" id="mask__adult">
+            <h2>大人口罩</h2>
+          </label>
+          <label for="mask__child">
+            <input type="radio" value="mask__child" name="maskType" id="mask__child">
+            <h2>兒童口罩</h2>
+          </label>
+          <label for="mask__all">
+            <input type="radio" value="mask__all" name="maskType" id="mask__all">
+            <h2>全部口罩</h2>
+          </label>
+        </form>
+      </div>
+    </div>
+    <ul class="resultList">
+      <li>
+        <h2>某某藥局</h2>
+        <h3>地址:asiodjfoai aosdjfadfio aosdj ioa</h3>
+        <h4>電話:09635132</h4>
+        <ul class="list__maskwrap">
+          <li class="l-bgco--danger">成人口罩 30個</li>
+          <li class="l-bgco--nice">兒童口罩 150個</li>
+        </ul>
+      </li>
+      <li>
+        <h2>某某藥局</h2>
+        <h3>地址:asiodjfoai aosdjfadfio aosdj ioa</h3>
+        <h4>電話:09635132</h4>
+        <ul class="list__maskwrap">
+          <li class="l-bgco--none">成人口罩 0個</li>
+          <li class="l-bgco--danger">兒童口罩 60個</li>
+        </ul>
+      </li>
+    </ul>
+  </div>
   <div id="map"></div>
   <script src="https://unpkg.com/leaflet@1.6.0/dist/leaflet.js"
     integrity="sha512-gZwIG9x3wUXg2hdXF6+rVkLF/0Vi9U8D2Ntg4Ga5I5BZpVkVxlJWbSQtXPSiUTtC0TjtGOmxa1AJPuV0CPthew=="
     crossorigin=""></script>
+  <script src="js/L.Control.Sidebar.js" crossorigin=""></script>
   <script src="js/all.js"></script>
 </body>
 
