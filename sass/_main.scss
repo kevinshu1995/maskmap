@@ -4,11 +4,44 @@
   font-family: $font-family;
 }
 
+//sidebar Btn================================
+.showSideBtn{
+  z-index: 999;
+  position: absolute;
+  left: -60px;
+  top: 0;
+  border-radius: 4px;
+  width: 50px!important;
+  height: 50px!important;
+  box-shadow: 0 1px 5px rgba(0,0,0,0.65);
+  i{
+    @include font-size(22);
+    line-height: 50px;
+  }
+}
+.sideBtn--ani{
+  animation: sideBtn--ani 1s ease-in-out 3;
+}
+@keyframes sideBtn--ani {
+  0%{ top:0;}
+  20%{ top:-6px;}
+  40%{ top:-3px;}
+  60%{ top:-6px;}
+}
+.leaflet-control-zoom{
+  margin-left: 70px!important;
+}
+.leaflet-control-zoom-out{
+  border-radius: 0 0 4px 4px;
+}
 //sidebar====================================
 .sidebar{
   position: relative;
+  display: flex;
+  flex-direction: column;
   color: $color-content;
   font-family: $font-family;
+  overflow: hidden!important;
   .sidebar__title{
     margin-bottom: .5em;
     font-weight: 900;
@@ -16,8 +49,11 @@
     letter-spacing: .1em;
   }
   .search{
-    padding: 16px 0; 
+    padding: 16px 24px; 
   }
+}
+.leaflet-sidebar>.leaflet-control{
+  padding:8px 0;
 }
 //sidebar-標語區==================
 .sidebar__note{
@@ -36,10 +72,16 @@
   }
   h2{
     @include font-size(18);
+    i{
+      color: $color-nice;
+    }
   }
   h3{
     margin-top: .5em;
     @include font-size(14);
+    i{
+      color: $color-pri;
+    }
   }
 }
 //sidebar-搜尋區==================
@@ -107,7 +149,52 @@
   }
 }
 //sidebar-清單區==================
-
+.resultList{
+  overflow: auto;
+  padding: 0 24px;
+}
+.resultList__wrap{
+  position: relative;
+  padding: 12px 16px;
+  margin-bottom: 12px;
+  border-radius: 8px;
+  box-shadow: 0 1px 4px $color-unselect;
+  h2{
+    @include font-size(22);
+    font-weight: 900;
+  }
+  h3{
+    @include font-size(14);
+    margin: .3em 0;
+    i{
+      @include font-size(14);
+      padding-right: 3px;
+    }
+    .fa-map-marker-alt{
+      margin-right: 1px;
+    }
+    .fa-phone-alt{
+      @include font-size(12);
+    }
+  }
+  .address{
+    @include font-size(28);
+    position: absolute;
+    right: .7em;
+    top: .3em;
+  }
+  .list__maskwrap {
+    display: flex;
+    margin-top: 8px;
+    li{
+      min-width: 50px;
+      padding: .3em 1em;
+      margin-right: 1em;
+      text-align: center;
+      border-radius: 1em;
+    }
+  }
+}
 
 
 
