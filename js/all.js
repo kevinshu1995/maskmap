@@ -102,7 +102,7 @@ function onLocationFound(e) {
 }
 
 function clicktoOpen(currentLocat) {
-  console.log(currentLocat)
+  alert('123')
 }
 
 
