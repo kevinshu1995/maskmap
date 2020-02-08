@@ -93,11 +93,16 @@ function updateSelect(country) {
 
 //locate
 function onLocationFound(e) {
-  var radius = e.accuracy;
-
-  L.marker(e.latlng).addTo(map)
-    .bindPopup("You are within " + radius + " meters from this point").openPopup();
+  let radius = e.accuracy;
+  let currentLocat = new L.MarkerClusterGroup().addTo(map);
+  currentLocat.addLayer(L.marker(e.latlng).addTo(map)
+    .bindPopup("您目前的位置").openPopup());
   L.circle(e.latlng, radius).addTo(map);
+  clicktoOpen(currentLocat);
+}
+
+function clicktoOpen(currentLocat) {
+  console.log(currentLocat)
 }
 
 
@@ -172,8 +177,6 @@ function setMarker(dataFilter) {
       <input type="button" value="兒童口罩 ${dataFilter[i].mask_child} 個" class="">
     </div>
     `));
-
-
     // 取得location中間值
     // locatCenterReQ.push({
     //   x: dataFilter[i].geometry[0],
