@@ -31,7 +31,9 @@ L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
 
 
 // Show sidebar
-sidebar.show();
+if (window.screen.width > 768) {
+  sidebar.show();
+}
 addBar();
 
 
@@ -195,13 +197,15 @@ function addBar() {
   sideBarBtn.innerHTML = `
   <a class="leaflet-control-zoom-in" href="#" title="Zoom in" role="button" aria-label="Zoom in">+</a>
   <a class="leaflet-control-zoom-out" href="#" title="Zoom out" role="button" aria-label="Zoom out">−</a>
-  <a class="showSideBtn" href="#" role="button"><i class="fas fa-bars"></i></a>
+  <a class="showSideBtn  showSideBtn--out" href="#" role="button"><i class="fas fa-bars"></i></a>
   `
-  let showSideBtn = document.querySelector('.showSideBtn');
-  showSideBtn.addEventListener('click', toggleSideBar);
+  let showSideBtnOut = document.querySelector('.showSideBtn--out');
+  let showSideBtnIn = document.querySelector('.showSideBtn--in');
+  showSideBtnOut.addEventListener('click', toggleSideBar);
+  showSideBtnIn.addEventListener('click', toggleSideBar);
 }
 function toggleSideBar() {
   sidebar.toggle();
-  let showSideBtn = document.querySelector('.showSideBtn');
-  showSideBtn.classList.toggle("sideBtn--ani");
+  let showSideBtnOut = document.querySelector('.showSideBtn--out');
+  showSideBtnOut.classList.toggle("sideBtn--ani");
 }

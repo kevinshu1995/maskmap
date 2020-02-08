@@ -6,18 +6,33 @@
 
 //sidebar Btn================================
 .showSideBtn{
-  z-index: 999;
   position: absolute;
-  left: -60px;
+  z-index: 999;
   top: 0;
-  border-radius: 4px;
-  width: 50px!important;
-  height: 50px!important;
-  box-shadow: 0 1px 5px rgba(0,0,0,0.65);
   i{
     @include font-size(22);
     line-height: 50px;
   }
+}
+.showSideBtn--out{
+  left: -60px;
+  border-radius: 4px;
+  width: 50px!important;
+  height: 50px!important;
+  box-shadow: 0 1px 5px rgba(0,0,0,0.65);
+}
+.showSideBtn--in{
+  display: none;
+  i{
+    color: $color-second;
+  }
+  @include pad{
+    display: block;
+    right: 10px;
+    margin-top: 10px;
+    padding: 0 1.2em;
+  }
+  
 }
 .sideBtn--ani{
   animation: sideBtn--ani 1s ease-in-out 3;
@@ -42,6 +57,9 @@
   color: $color-content;
   font-family: $font-family;
   overflow: hidden!important;
+  @include pad{
+    overflow: scroll!important;
+  }
   .sidebar__title{
     margin-bottom: .5em;
     font-weight: 900;
@@ -152,6 +170,9 @@
 .resultList{
   overflow: auto;
   padding: 0 24px;
+  @include pad{
+    overflow: visible;
+  }
 }
 .resultList__wrap{
   position: relative;
