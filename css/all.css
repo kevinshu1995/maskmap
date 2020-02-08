@@ -632,25 +632,38 @@ a {
 }
 
 .l-popupWrap .l-popup__name {
-  letter-spacing: .1em;
   font-size: 18px;
   font-size: 1.125rem;
+  font-weight: 900;
+}
+
+.l-popupWrap .l-popup__inputWrap {
+  width: 100%;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: justify;
+      -ms-flex-pack: justify;
+          justify-content: space-between;
 }
 
 .l-popupWrap input {
+  width: 49%;
   padding: .3em .5em;
   border-radius: .4em;
   font-size: 18px;
   font-size: 1.125rem;
-  background-color: #FC4B65;
-  color: #000000;
-}
-
-.l-popupWrap input:hover {
-  background-color: #fb193a;
 }
 
 .l-popupWrap .l-popup__detail {
   margin: 1em 0;
+}
+
+.l-popupWrap .l-popup__detail i {
+  margin-right: 1em;
+}
+
+.l-popupWrap .l-popup__detail .fa-map-marker-alt {
+  padding: .1em;
 }
 /*# sourceMappingURL=all.css.map */

@@ -42,7 +42,7 @@ var xhr = new XMLHttpRequest();
 xhr.open('get', 'https://raw.githubusercontent.com/kiang/pharmacies/master/json/points.json?fbclid=IwAR3XtDf10Tocq8nHU3kLdEtLvAb_yBIPum9i_t2m_wsHMV41ZdufKpWjDu4');
 xhr.send(null);
 xhr.onload = function () {
-  maskData = JSON.parse(xhr.responseText);
+  maskData = JSON.parse(xhr.responseText).features;
   countrySelect();
   getdata();
 }
@@ -51,11 +51,11 @@ xhr.onload = function () {
 function countrySelect() {
   let country;
   let countryAry = [];
-  for (let i = 0; i < maskData.features.length; i++) {
-    let countryStr = maskData.features[i].properties.address.substring(0, 3);
+  for (let i = 0; i < maskData.length; i++) {
+    let countryStr = maskData[i].properties.address.substring(0, 3);
     countryAry.push(countryStr);
   }
-  // let zoneStr = maskData.features[i].properties.address.substring(0, 6);
+  // let zoneStr = maskData[i].properties.address.substring(0, 6);
   country = countryAry.filter(function (value, index, arr) {
     return arr.indexOf(value) === index;
   });
@@ -72,9 +72,9 @@ function updateSelect(country) {
 //   let val = e.target.value;
 //   let str;
 //   let ary;
-//   for (let i = 0; i < maskData.features.length; i++) {
-//     let countryStr = maskData.features[i].properties.address.substring(0, 3);
-//     let zoneStr = maskData.features[i].properties.address.substring(3, 6);
+//   for (let i = 0; i < maskData.length; i++) {
+//     let countryStr = maskData[i].properties.address.substring(0, 3);
+//     let zoneStr = maskData[i].properties.address.substring(3, 6);
 //     ary.push(zoneStr);
 //   }
 //   aryNoDuplicate = ary.filter(function (value, index, arr) {
@@ -98,11 +98,7 @@ function onLocationFound(e) {
   currentLocat.addLayer(L.marker(e.latlng).addTo(map)
     .bindPopup("您目前的位置").openPopup());
   L.circle(e.latlng, radius).addTo(map);
-  clicktoOpen(currentLocat);
-}
-
-function clicktoOpen(currentLocat) {
-  alert('123')
+  map.setView(e.latlng, 14);
 }
 
 
@@ -139,19 +135,19 @@ function getdata() {
   //   //開放時間
   //   available: ''
   // }]
-  for (let i = 0; i < maskData.features.length; i++) {
+  for (let i = 0; i < maskData.length; i++) {
     //
-    let zone = maskData.features[i].properties.address.substring(0, 3);
+    let zone = maskData[i].properties.address.substring(0, 3);
     // if (countryUser === zone) {
     dataFilter.push({
-      geometry: maskData.features[i].geometry.coordinates.reverse(),
-      address: maskData.features[i].properties.address,
-      name: maskData.features[i].properties.name,
-      tel: maskData.features[i].properties.phone,
-      mask_adult: maskData.features[i].properties.mask_adult,
-      mask_child: maskData.features[i].properties.mask_child,
-      updated: maskData.features[i].properties.updated,
-      available: maskData.features[i].properties.available
+      geometry: maskData[i].geometry.coordinates.reverse(),
+      address: maskData[i].properties.address,
+      name: maskData[i].properties.name,
+      tel: maskData[i].properties.phone,
+      mask_adult: maskData[i].properties.mask_adult,
+      mask_child: maskData[i].properties.mask_child,
+      updated: maskData[i].properties.updated,
+      available: maskData[i].properties.available
     })
     // }
   }
@@ -162,19 +158,67 @@ var markers = new L.MarkerClusterGroup().addTo(map);
 function setMarker(dataFilter) {
   // let locatCenter = [];
   // let locatCenterReQ = [];
+
+  //marker's color set
+  let greenIcon = new L.Icon({
+    iconUrl: 'https://cdn.rawgit.com/pointhi/leaflet-color-markers/master/img/marker-icon-2x-green.png',
+    shadowUrl: 'https://cdnjs.cloudflare.com/ajax/libs/leaflet/0.7.7/images/marker-shadow.png',
+    iconSize: [25, 41],
+    iconAnchor: [12, 41],
+    popupAnchor: [1, -34],
+    shadowSize: [41, 41]
+  });
+  let redIcon = new L.Icon({
+    iconUrl: 'https://cdn.rawgit.com/pointhi/leaflet-color-markers/master/img/marker-icon-2x-red.png',
+    shadowUrl: 'https://cdnjs.cloudflare.com/ajax/libs/leaflet/0.7.7/images/marker-shadow.png',
+    iconSize: [25, 41],
+    iconAnchor: [12, 41],
+    popupAnchor: [1, -34],
+    shadowSize: [41, 41]
+  });
+
   for (let i = 0; i < dataFilter.length; i++) {
-    markers.addLayer(L.marker(dataFilter[i].geometry)//.addTo(map)
+    let popupBgCoAdult;
+    let popupBgCoChild;
+    let markerColor;
+    let m_adult = dataFilter[i].mask_adult;
+    let m_child = dataFilter[i].mask_child;
+    //判斷popup裡的btn顏色、marker顏色
+    if (m_adult + m_child >= 100) {
+      markerColor = greenIcon;
+    } else if (m_adult + m_child < 100 && m_adult + m_child != 0) {
+      markerColor = redIcon;
+    } else {
+      markerColor = redIcon;
+    }
+    if (dataFilter[i].mask_adult >= 50) {
+      popupBgCoAdult = "l-bgco--nice";
+    } else if (dataFilter[i].mask_adult < 50 && dataFilter[i].mask_adult != 0) {
+      popupBgCoAdult = "l-bgco--danger";
+    } else {
+      popupBgCoAdult = "l-bgco--none"
+    }
+    if (dataFilter[i].mask_child >= 50) {
+      popupBgCoChild = "l-bgco--nice";
+    } else if (dataFilter[i].mask_child < 50 && dataFilter[i].mask_adult != 0) {
+      popupBgCoChild = "l-bgco--danger";
+    } else {
+      popupBgCoChild = "l-bgco--none"
+    }
+    markers.addLayer(L.marker(dataFilter[i].geometry, { icon: markerColor })//.addTo(map)
       //彈出視窗
       .bindPopup(`
     <div class="l-popupWrap">
       <h2 class="l-popup__name">${dataFilter[i].name}</h2>
       <ul class="l-popup__detail">
-        <li>藥局電話：${dataFilter[i].tel}</li>
-        <li>地點：${dataFilter[i].address}</li>
-        <li>更新時間：${dataFilter[i].updated == "" ? '無資料' : dataFilter[i].updated}</li>
+        <li><i class="fas fa-map-marker-alt"></i> <a href="https://www.google.com.tw/maps/place/${dataFilter[i].address}" target="_blank">${dataFilter[i].address}</a></li>
+        <li><i class="fas fa-phone-alt"></i> <a href="tel:${dataFilter[i].tel}">${dataFilter[i].tel}</a></li>
+        <li>更新時間：${dataFilter[i].updated == "" ? '無資料' : dataFilter[i].updated} - 實際以藥局發放為準</li>
       </ul>
-      <input type="button" value="成人口罩 ${dataFilter[i].mask_adult} 個" class="">
-      <input type="button" value="兒童口罩 ${dataFilter[i].mask_child} 個" class="">
+      <div class="l-popup__inputWrap">
+        <input type="button" value="成人口罩 ${dataFilter[i].mask_adult} 個" class="${popupBgCoAdult}">
+        <input type="button" value="兒童口罩 ${dataFilter[i].mask_child} 個" class="${popupBgCoChild}">
+      </div>
     </div>
     `));
     // 取得location中間值
