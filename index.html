@@ -29,30 +29,35 @@
       <h3><i class="fas fa-exclamation-circle"></i> 請把資源留給需要的人喔！</h3>
     </div>
     <div class="search">
-      <h2 class="sidebar__title">搜尋</h2>
+      <h2 class="sidebar__title"><i class="fas fa-search"></i> 搜尋</h2>
       <div class="selectwrap">
         <fieldset class="select__row">
           <legend>縣市</legend>
-          <select name="" id="countryForm" class="countryForm">
-            <option value=""></option>
-          </select>
+          <div class="selectFrom">
+            <select id="countryForm" class="countryForm">
+              <option value="">-- 請選擇縣市 --</option>
+            </select>
+          </div>
         </fieldset>
         <fieldset class="select__row">
           <legend>鄉鎮市區</legend>
-          <select name="" id="countryForm" class="countryForm">
-            <option value="">123</option>
-          </select>
+          <div class="selectFrom">
+            <select id="zoneForm" class="zoneForm">
+              <!-- <select class="zoneForm"> -->
+              <option value="">-- 請選擇鄉鎮區 --</option>
+            </select id="zoneForm">
+          </div>
         </fieldset>
         <form class="select__maskType">
-          <label for="mask__adult">
+          <label for="mask__adult" class="select__maskType__btn">
             <input type="radio" value="mask__adult" name="maskType" id="mask__adult">
             <h2>大人口罩</h2>
           </label>
-          <label for="mask__child">
+          <label for="mask__child" class="select__maskType__btn">
             <input type="radio" value="mask__child" name="maskType" id="mask__child">
             <h2>兒童口罩</h2>
           </label>
-          <label for="mask__all">
+          <label for="mask__all" class="select__maskType__btn">
             <input type="radio" value="mask__all" name="maskType" id="mask__all">
             <h2>全部口罩</h2>
           </label>
@@ -61,10 +66,13 @@
     </div>
     <ul class="resultList">
       <li class="resultList__wrap">
-        <h2>某某藥局</h2>
+        <div class="resultList__wrap__tilte">
+          <h2 class="locatPlace">某某藥局某某藥局某某藥局</h2>
+          <!-- <button class="watchOnMap">查 看</button> -->
+          <a href="https://www.google.com.tw/maps/place/424台中市和平區武陵路3號" class="address"><i
+              class="fas fa-directions"></i></a>
+        </div>
         <h3><i class="fas fa-map-marker-alt"></i> 地址 : asiodjfoai aosdjfadfio aosdj ioa</h3>
-        <a href="https://www.google.com.tw/maps/place/424台中市和平區武陵路3號" class="address"><i
-            class="fas fa-directions"></i></a>
         <h3><i class="fas fa-phone-alt"></i> 電話 : <a href="tel:09635132">09635132</a></h3>
         <ul class="list__maskwrap">
           <li class="l-bgco--danger">成人口罩 30個</li>
@@ -72,7 +80,7 @@
         </ul>
       </li>
       <li class="resultList__wrap">
-        <h2>某某藥局</h2>
+        <a class="locatPlace">某某藥局</a>
         <h3><i class="fas fa-map-marker-alt"></i> 地址 : asiodjfoai aosdjfadfio aosdj ioa</h3>
         <a href="https://www.google.com.tw/maps/place/424台中市和平區武陵路3號" class="address"><i
             class="fas fa-directions"></i></a>

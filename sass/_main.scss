@@ -3,7 +3,10 @@
   height: 100%;
   font-family: $font-family;
 }
-
+::-moz-selection,/* Code for Firefox */
+::selection { 
+  background-color: $color-pri;
+}
 //sidebar Btn================================
 .showSideBtn{
   position: absolute;
@@ -65,6 +68,9 @@
     font-weight: 900;
     @include font-size(22);
     letter-spacing: .1em;
+    i{
+      @include font-size(18);
+    }
   }
   .search{
     padding: 16px 24px; 
@@ -111,7 +117,10 @@
   .select__row{//包裹 select zone
     border: 1px solid $color-unselect;
     border-radius: 3em;
-    margin-bottom: 1em;
+    margin-bottom: 18px;
+    &:hover{
+      box-shadow: 0 0 1px $color-content;
+    }
   }
   legend{
     margin-left: 22px;
@@ -119,19 +128,49 @@
     letter-spacing: .1em;
     @include font-size(12)
   }
-  .countryForm{ // select zone
+}
+.selectFrom{ // select zone
+  position: relative;
+  &:after {
+    position: absolute;
+    content: "";
+    top: 0;
+    bottom: 0;
+    right: 20px;
+    margin: auto;
+    width: 0;
+    height: 0;
+    border: 6px solid transparent;
+    border-color: $color-second transparent transparent transparent;
+  }
+  select{
+    //移除原始箭頭
+    appearance:none;
+    -moz-appearance:none;
+    -webkit-appearance:none;
+    //
     width: 100%;
     min-width: 100px;
     padding: .3em 1.5em .5em;
     letter-spacing: .1em;
+    text-align: center;
+    text-align-last:center;
     @include font-size(18);
     border: none;
     outline: none;
     background-color: transparent;
     border-radius: 4px;
+    cursor: pointer;
+    ::-ms-expand{
+      display: none; 
+    }
+    option:checked {
+      display: none;
+    }
   }
-  
 }
+  
+
 //sidebar-搜尋區-口罩=============
 .select__maskType{
   display: flex;
@@ -150,6 +189,9 @@
     color: darken($color-unselect, 40%);
     border-radius: 2em;
     border: 1px solid $color-unselect;
+    &:hover{
+      box-shadow: 0 0 1px $color-content;
+    }
   }
   input{
     position: absolute;
@@ -169,9 +211,17 @@
 //sidebar-清單區==================
 .resultList{
   overflow: auto;
-  padding: 0 24px;
+  padding: 16px 24px 0;
+  background-color: darken($color-white, 2%);
   @include pad{
     overflow: visible;
+  }
+  .resultList__defaultList{
+    margin: .5em 0 .8em;
+    letter-spacing: .1em;
+    text-align: center;
+    @include font-size(18);
+    color: lighten($color-content, 30%);
   }
 }
 .resultList__wrap{
@@ -180,9 +230,36 @@
   margin-bottom: 12px;
   border-radius: 8px;
   box-shadow: 0 1px 4px $color-unselect;
-  h2{
-    @include font-size(22);
-    font-weight: 900;
+  cursor: pointer;
+  .resultList__wrap__tilte{
+    display: flex;
+    justify-content: space-between;
+    h2{
+      display: inline-block;
+      vertical-align: middle;
+      line-height: 1.7em;
+      padding: .1em .5em;
+      @include font-size(22);
+      font-weight: 900;
+      cursor: pointer;
+      margin-right: auto;
+    }
+    // .watchOnMap{
+    //   text-align: center;
+    //   margin-right: 8px;
+    //   padding: 0 1em;
+    //   border-radius: 1.5em;
+    //   border: none;
+    //   cursor: pointer;
+    //   background-color: $color-pri;
+    //   color: $color-white;
+    //   height: 36px;
+    // }
+    .address{
+      position: relative;
+      bottom: 2px;
+      @include font-size(28);
+    }
   }
   h3{
     @include font-size(14);
@@ -197,12 +274,6 @@
     .fa-phone-alt{
       @include font-size(12);
     }
-  }
-  .address{
-    @include font-size(28);
-    position: absolute;
-    right: .7em;
-    top: .3em;
   }
   .list__maskwrap {
     display: flex;
@@ -246,4 +317,8 @@
       padding: .1em;
     }
   }
+}
+.leaflet-container a.leaflet-popup-close-button{
+  top: 5px;
+  right: 5px;
 }
