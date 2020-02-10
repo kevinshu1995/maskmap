@@ -337,6 +337,37 @@ a {
   background-color: #FC4B65;
 }
 
+.colorNote {
+  font-family: "微軟正黑體", sans-serif;
+  position: absolute;
+  right: 10px;
+  top: 10px;
+  z-index: 999;
+  background-color: #fff;
+  border-radius: 5px;
+  -webkit-box-shadow: 0 1px 5px rgba(0, 0, 0, 0.65);
+          box-shadow: 0 1px 5px rgba(0, 0, 0, 0.65);
+  font-size: 14px;
+  font-size: 0.875rem;
+}
+
+.colorNote .colorNote__title {
+  padding: .7em .5em;
+  text-align: center;
+}
+
+.colorNote .colorNote__danger {
+  color: #FC4B65;
+}
+
+.colorNote .colorNote__nice {
+  color: #1BC62D;
+}
+
+.colorNote .colorNote__none {
+  color: #D4D4D4;
+}
+
 .showSideBtn {
   position: absolute;
   z-index: 999;
@@ -363,14 +394,14 @@ a {
 }
 
 .showSideBtn--in i {
-  color: #424242;
+  color: #ffffff;
 }
 
 @media (max-width: 767px) {
   .showSideBtn--in {
     display: block;
     right: 10px;
-    margin-top: 10px;
+    margin-top: 5px;
     padding: 0 1.2em;
   }
 }
@@ -423,6 +454,7 @@ a {
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
+  padding: 0 !important;
   -webkit-box-orient: vertical;
   -webkit-box-direction: normal;
       -ms-flex-direction: column;
@@ -453,14 +485,16 @@ a {
   font-size: 0.875rem;
 }
 
+.sidebar .search {
+  -webkit-box-shadow: 0 0 5px #cacaca;
+          box-shadow: 0 0 5px #cacaca;
+}
+
 .leaflet-sidebar > .leaflet-control {
   padding: 8px 0;
 }
 
 .sidebar__note {
-  position: absolute;
-  left: 0;
-  top: 0;
   width: 100%;
   padding: 16px 24px;
   color: #FFddcc;
@@ -507,8 +541,8 @@ a {
 }
 
 .sidebar__note h4 {
-  font-size: 14px;
-  font-size: 0.875rem;
+  font-size: 12px;
+  font-size: 0.75rem;
 }
 
 .sidebar__note h4 i {
@@ -516,8 +550,15 @@ a {
   color: #ffffff;
 }
 
-.search {
-  margin-top: 135px;
+.sidebar__note .sidebar__note__time h3 {
+  margin-top: .3em;
+  font-size: 14px;
+  font-size: 0.875rem;
+  color: #FFA69E;
+}
+
+.sidebar__note .sidebar__note__time .sidebar__ID {
+  margin: .5em 0;
 }
 
 .selectwrap {
@@ -642,7 +683,6 @@ a {
 .resultList {
   overflow: auto;
   padding: 16px 24px 0;
-  background-color: #fafafa;
 }
 
 @media (max-width: 767px) {

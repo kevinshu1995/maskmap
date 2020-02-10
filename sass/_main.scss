@@ -7,6 +7,31 @@
 ::selection { 
   background-color: $color-pri;
 }
+//maskcolor note=============================
+.colorNote{
+  font-family: $font-family;
+  position: absolute;
+  right: 10px;
+  top: 10px;
+  z-index: 999;
+  background-color: #fff;
+  border-radius: 5px;
+  box-shadow: 0 1px 5px rgba(0,0,0,0.65);
+  @include font-size(14);
+  .colorNote__title{
+    padding: .7em .5em;
+    text-align: center;
+  }
+  .colorNote__danger{
+    color: $color-pri;
+  }
+  .colorNote__nice{
+    color: $color-nice;
+  }
+  .colorNote__none{
+    color: $color-unselect;
+  }
+}
 //sidebar Btn================================
 .showSideBtn{
   position: absolute;
@@ -27,12 +52,12 @@
 .showSideBtn--in{
   display: none;
   i{
-    color: $color-second;
+    color: $color-white;
   }
   @include pad{
     display: block;
     right: 10px;
-    margin-top: 10px;
+    margin-top: 5px;
     padding: 0 1.2em;
   }
   
@@ -56,6 +81,7 @@
 .sidebar{
   position: relative;
   display: flex;
+  padding:0!important;
   flex-direction: column;
   color: $color-content;
   font-family: $font-family;
@@ -78,15 +104,15 @@
       @include font-size(14);
     }
   }
+  .search{
+    box-shadow: 0 0 5px lighten($color-content, 50%);
+  }
 }
 .leaflet-sidebar>.leaflet-control{
   padding:8px 0;
 }
 //sidebar-標語區==================
 .sidebar__note{
-  position: absolute;
-  left: 0;
-  top: 0;
   width: 100%;
   padding: 16px 24px;
   // color: $color-white;
@@ -126,17 +152,24 @@
     }
   }
   h4{
-    @include font-size(14);
+    @include font-size(12);
     i{
       letter-spacing: .2em;
       color: $color-white;
     }
   }
+  .sidebar__note__time{
+    h3{
+      margin-top: .3em;
+      @include font-size(14);
+      color: #FFA69E;
+    }
+    .sidebar__ID{
+      margin: .5em 0;
+    }
+  }
 }
-//sidebar-搜尋區==================
-.search{
-  margin-top: 135px;
-}
+//sidebar-搜尋區==============================
 //sidebar-搜尋區-選單=============
 .selectwrap{
   overflow: hidden;
@@ -238,7 +271,7 @@
 .resultList{
   overflow: auto;
   padding: 16px 24px 0;
-  background-color: darken($color-white, 2%);
+  // background-color: darken($color-white, 2%);
   @include pad{
     overflow: scroll;
   }

@@ -19,9 +19,9 @@ map.locate({ maxZoom: 16 });
 //find your location
 map.on('locationfound', onLocationFound);
 countryForm.addEventListener('change', zoneSelect);
-
 zoneForm.addEventListener('click', checkFormValue);
 resultList.addEventListener('scroll', slideUp);
+
 //執行sidebar
 map.addControl(sidebar);
 // Show sidebar
@@ -29,8 +29,10 @@ if (window.screen.width > 768) {
   sidebar.show();
 }
 addBar();
+getTime()
 getmaskJSON();
 getzoneJSON();
+// colorNoteInit();
 //建立地圖==================================
 L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
   attribution: '<a href="https://www.openstreetmap.org/">OSM</a>',
@@ -334,7 +336,7 @@ function locatPlaceFun(e) {
   }
   console.log(locat);
 }
-
+//sidebar slideUp
 function slideUp() {
   let selectwrap = document.querySelector('.selectwrap');
   let searchBtn = document.querySelector('.sidebar__title');
@@ -345,6 +347,52 @@ function slideUp() {
   searchBtn.addEventListener('click', showSearchSection)
 }
 function showSearchSection() {
+  let searchNote = document.querySelector('.searchNote');
   let selectwrap = document.querySelector('.selectwrap');
   selectwrap.style.display = "block";
+  searchNote.style.display = "none";
 }
+//gettime===================================
+function getTime() {
+  let time = new Date();
+  let tYear = time.getFullYear().toString();
+  let tMonth = (time.getMonth() + 1) > 9 ? (time.getMonth() + 1).toString() : '0' + (time.getMonth() + 1);
+  let tDate = (time.getDate()) > 9 ? (time.getDate()).toString() : '0' + (time.getDate());
+  let weekdays = "星期日,星期一,星期二,星期三,星期四,星期五,星期六".split(",");
+  let idBuyDay;
+  switch (weekdays[time.getDay()]) {
+    case '星期一':
+    case '星期三':
+    case '星期五':
+      idBuyDay = '奇數';
+      break;
+    case '星期二':
+    case '星期四':
+    case '星期六':
+      idBuyDay = '偶數';
+      break;
+    case '星期日':
+      idBuyDay = '不限'
+  }
+  let curentTime = tYear + ' / ' + tMonth + ' / ' + tDate + ' / ' + weekdays[time.getDay()];
+  let idDay = `身分證尾數<mark>${idBuyDay}購買日</mark>`
+  console.log(curentTime);
+  console.log(idDay);
+  let str = ` <h3>${curentTime}</h3>
+              <h2 class="sidebar__ID">${idDay}</h2>`
+  let sideBarTime = document.querySelector('.sidebar__note__time');
+  sideBarTime.innerHTML = str;
+}
+//colorNote===================================================
+// function colorNoteInit() {
+//   let wrap = document.querySelector('.colorNote__wrap');
+//   let outter = document.querySelector('.colorNote');
+//   wrapdisplay();
+//   outter.addEventListener('click', wrapdisplayBlock)
+//   function wrapdisplay() { wrap.style.display = "none"; }
+//   function wrapdisplayBlock() {
+//     wrap.style.display = "block";
+//     outter.addEventListener('click', wrapdisplayNone())
+//     function wrapdisplayNone() { wrap.style.display = "none"; }
+//   }
+// }
