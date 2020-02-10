@@ -89,31 +89,53 @@
   top: 0;
   width: 100%;
   padding: 16px 24px;
-  background: $color-bg;
+  // color: $color-white;
+  // color: #F8F4E3;
+  // color: #FFA69E; //可以做附註
+  color: #FFddcc; 
+  background: linear-gradient(45deg,$color-pri,$color-pri-s);
   mark{
     font-weight: 900;
-    color: $color-pri;
+    // color: #FFE19C;
+    // color: #F5F749;
+    // color: #FFFD98;
+    color: $color-white;
     background-color: transparent;
     @include font-size(24);
     padding: 0 .2em;
   }
   h2{
-    @include font-size(18);
+    @include font-size(16);
+  }
+  .sidebar__note__wrap{
+    margin: .5em 0;
+    display: flex;
+    // justify-content: space-between;
+  }
+  p{
+    display: inline-block;
+    margin-right: 1.5em;
+    @include font-size(12);
     i{
-      color: $color-nice;
+      letter-spacing: .4em;
+      color: $color-white;
+    }
+    mark{
+      color: $color-white;
+      @include font-size(14);
     }
   }
-  h3{
-    margin-top: .5em;
+  h4{
     @include font-size(14);
     i{
-      color: $color-pri;
+      letter-spacing: .2em;
+      color: $color-white;
     }
   }
 }
 //sidebar-搜尋區==================
 .search{
-  margin-top: 160px;
+  margin-top: 135px;
 }
 //sidebar-搜尋區-選單=============
 .selectwrap{
@@ -262,6 +284,7 @@
     .address{
       position: relative;
       bottom: 2px;
+      color: $color-pri;
       @include font-size(28);
     }
   }

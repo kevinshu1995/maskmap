@@ -23,10 +23,15 @@
   <div id="sidebar" class="sidebar">
     <a class="showSideBtn  showSideBtn--in" href="#" role="button"><i class="fas fa-bars"></i></a>
     <div class="sidebar__note">
-      <h2><i class="fas fa-check"></i> 每<mark>7</mark>天購買<mark>1</mark>次口罩</h2>
-      <h2><i class="fas fa-check"></i> 一張健保卡限購<mark>2</mark>片口罩</h2>
-      <h2><i class="fas fa-check"></i> 持健保卡最多可代購<mark>1</mark>張</h2>
-      <h3><i class="fas fa-exclamation-circle"></i> 請把資源留給需要的人喔！</h3>
+      <div class="sidebar__note__time">
+        <h3>2020 / 02 / 10 / 星期三</h3>
+        <h2>身分證尾數<mark>奇數購買日</mark></h2>
+      </div>
+      <div class="sidebar__note__wrap">
+        <p><i class="fas fa-check"></i> <mark>7</mark>天購買<mark>1</mark>次口罩</p>
+        <p><i class="fas fa-check"></i> 每張健保卡限購<mark>2</mark>片口罩</p>
+      </div>
+      <h4><i class="fas fa-exclamation-circle"></i> 請把資源留給需要的人喔！</h4>
     </div>
     <div class="search">
       <h2 class="sidebar__title"><i class="fas fa-search"></i> 搜尋 <span class="searchNote">點擊開啟搜尋面板</span></h2>
@@ -66,6 +71,7 @@
     </div>
     <ul class="resultList">
       <li class="resultList__defaultList">-- 搜尋結果為空 --</li>
+      <li class="resultList__wrap" style="display: none;">-- 搜尋結果為空 --</li>
     </ul>
   </div>
   <div id="map"></div>

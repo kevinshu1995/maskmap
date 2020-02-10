@@ -15,7 +15,7 @@ map = L.map('map').setView([23.5, 120.5], 8);
 //maxZoom: 16 as the maximum zoom
 map.locate({ maxZoom: 16 });
 //show alert if locate error
-map.on('locationerror', onLocationError);
+// map.on('locationerror', onLocationError);
 //find your location
 map.on('locationfound', onLocationFound);
 countryForm.addEventListener('change', zoneSelect);

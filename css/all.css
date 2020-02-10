@@ -463,12 +463,13 @@ a {
   top: 0;
   width: 100%;
   padding: 16px 24px;
-  background: #f2f2f2;
+  color: #FFddcc;
+  background: linear-gradient(45deg, #FC4B65, #FF6436);
 }
 
 .sidebar__note mark {
   font-weight: 900;
-  color: #FC4B65;
+  color: #ffffff;
   background-color: transparent;
   font-size: 24px;
   font-size: 1.5rem;
@@ -476,26 +477,47 @@ a {
 }
 
 .sidebar__note h2 {
-  font-size: 18px;
-  font-size: 1.125rem;
+  font-size: 16px;
+  font-size: 1rem;
 }
 
-.sidebar__note h2 i {
-  color: #1BC62D;
+.sidebar__note .sidebar__note__wrap {
+  margin: .5em 0;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
 }
 
-.sidebar__note h3 {
-  margin-top: .5em;
+.sidebar__note p {
+  display: inline-block;
+  margin-right: 1.5em;
+  font-size: 12px;
+  font-size: 0.75rem;
+}
+
+.sidebar__note p i {
+  letter-spacing: .4em;
+  color: #ffffff;
+}
+
+.sidebar__note p mark {
+  color: #ffffff;
   font-size: 14px;
   font-size: 0.875rem;
 }
 
-.sidebar__note h3 i {
-  color: #FC4B65;
+.sidebar__note h4 {
+  font-size: 14px;
+  font-size: 0.875rem;
+}
+
+.sidebar__note h4 i {
+  letter-spacing: .2em;
+  color: #ffffff;
 }
 
 .search {
-  margin-top: 160px;
+  margin-top: 135px;
 }
 
 .selectwrap {
@@ -672,6 +694,7 @@ a {
 .resultList__wrap .resultList__wrap__tilte .address {
   position: relative;
   bottom: 2px;
+  color: #FC4B65;
   font-size: 28px;
   font-size: 1.75rem;
 }
