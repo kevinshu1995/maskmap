@@ -432,18 +432,13 @@ a {
   overflow: hidden !important;
 }
 
-@media (max-width: 767px) {
-  .sidebar {
-    overflow: scroll !important;
-  }
-}
-
 .sidebar .sidebar__title {
-  margin-bottom: .5em;
   font-weight: 900;
   font-size: 22px;
   font-size: 1.375rem;
   letter-spacing: .1em;
+  padding: 16px 24px;
+  color: #FC4B65;
 }
 
 .sidebar .sidebar__title i {
@@ -451,8 +446,11 @@ a {
   font-size: 1.125rem;
 }
 
-.sidebar .search {
-  padding: 16px 24px;
+.sidebar .sidebar__title .searchNote {
+  display: none;
+  color: #FC4B65;
+  font-size: 14px;
+  font-size: 0.875rem;
 }
 
 .leaflet-sidebar > .leaflet-control {
@@ -498,6 +496,11 @@ a {
 
 .search {
   margin-top: 160px;
+}
+
+.selectwrap {
+  overflow: hidden;
+  padding: 0 24px;
 }
 
 .selectwrap .select__row {
@@ -564,6 +567,7 @@ a {
 }
 
 .select__maskType {
+  margin-bottom: 18px;
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
@@ -621,7 +625,7 @@ a {
 
 @media (max-width: 767px) {
   .resultList {
-    overflow: visible;
+    overflow: scroll;
   }
 }
 

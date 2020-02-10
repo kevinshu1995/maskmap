@@ -61,19 +61,22 @@
   font-family: $font-family;
   overflow: hidden!important;
   @include pad{
-    overflow: scroll!important;
+    // overflow: scroll!important;
   }
   .sidebar__title{
-    margin-bottom: .5em;
     font-weight: 900;
     @include font-size(22);
     letter-spacing: .1em;
+    padding: 16px 24px;
+    color: $color-pri;
     i{
       @include font-size(18);
     }
-  }
-  .search{
-    padding: 16px 24px; 
+    .searchNote{
+      display: none;
+      color: $color-pri;
+      @include font-size(14);
+    }
   }
 }
 .leaflet-sidebar>.leaflet-control{
@@ -114,6 +117,8 @@
 }
 //sidebar-搜尋區-選單=============
 .selectwrap{
+  overflow: hidden;
+  padding: 0 24px;
   .select__row{//包裹 select zone
     border: 1px solid $color-unselect;
     border-radius: 3em;
@@ -169,10 +174,9 @@
     }
   }
 }
-  
-
 //sidebar-搜尋區-口罩=============
 .select__maskType{
+  margin-bottom: 18px;
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -214,7 +218,7 @@
   padding: 16px 24px 0;
   background-color: darken($color-white, 2%);
   @include pad{
-    overflow: visible;
+    overflow: scroll;
   }
   .resultList__defaultList{
     margin: .5em 0 .8em;

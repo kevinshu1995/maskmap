@@ -4,30 +4,24 @@ var zoneData;
 var popup;
 var countryForm = document.getElementById('countryForm');
 var zoneForm = document.getElementById('zoneForm');
-
+var resultList = document.querySelector('.resultList');
 //取得sidebar
 var sidebar = L.control.sidebar('sidebar', {
   position: 'left'
 });
-//sidebarbtn
-// var showSide = document.querySelector('.showSide');
-
-//function=============================================
-//getmaskJSON
-getmaskJSON();
-getzoneJSON();
+//function=================================
 //set default location
 map = L.map('map').setView([23.5, 120.5], 8);
 //maxZoom: 16 as the maximum zoom
 map.locate({ maxZoom: 16 });
 //show alert if locate error
-// map.on('locationerror', onLocationError);
+map.on('locationerror', onLocationError);
 //find your location
 map.on('locationfound', onLocationFound);
 countryForm.addEventListener('change', zoneSelect);
-zoneForm.addEventListener('change', getlocationView);
-zoneForm.addEventListener('click', checkFormValue);
 
+zoneForm.addEventListener('click', checkFormValue);
+resultList.addEventListener('scroll', slideUp);
 //執行sidebar
 map.addControl(sidebar);
 // Show sidebar
@@ -35,8 +29,9 @@ if (window.screen.width > 768) {
   sidebar.show();
 }
 addBar();
-
-//建立地圖=============================================
+getmaskJSON();
+getzoneJSON();
+//建立地圖==================================
 L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
   attribution: '<a href="https://www.openstreetmap.org/">OSM</a>',
   maxZoom: 19,
@@ -50,6 +45,7 @@ function getzoneJSON() {
   xhr.send(null);
   xhr.onload = function () {
     zoneData = JSON.parse(xhr.responseText);
+
   }
 }
 //取口罩JSON
@@ -61,9 +57,9 @@ function getmaskJSON() {
     maskData = JSON.parse(xhr.responseText).features;
     countrySelect();
     getdata();
+    getList('松山區', '臺北市');
   }
 }
-
 //篩選重複的市==============================
 function countrySelect() {
   let country;
@@ -104,6 +100,7 @@ function zoneSelect(e) {
     str += `<option value="${zoneAry[i].district}">${zoneAry[i].district}</option>`
   }
   zoneForm.innerHTML = str;
+  zoneForm.addEventListener('change', getlocationView);
 }
 //確認縣市是否有空值
 function checkFormValue() {
@@ -128,7 +125,6 @@ function getlocationView(e) {
 //藥局列表
 function getList(zone, country) {
   let str = `<li class="resultList__defaultList">-- 以下為${country}${zone}內的藥局 --</li>`;
-  let resultList = document.querySelector('.resultList');
   for (let i = 0; i < maskData.length; i++) {
     let maskDataVal = maskData[i].properties;
     let popupBgCoAdult;
@@ -172,7 +168,6 @@ function getList(zone, country) {
   var locatPlaceList = document.querySelectorAll('.resultList__wrap');
   locatPlaceAddEvent(locatPlace, locatPlaceList);
 }
-
 //default locate============================
 function onLocationFound(e) {
   let radius = e.accuracy;
@@ -187,7 +182,7 @@ function onLocationError(e) {
   e.message = "無法使用GPS抓取您的位置，請開啟GPS功能後，重新整理頁面。"
   alert(e.message);
 }
-//取得data 並
+//取得data 並 set markers===================
 function getdata() {
   let dataFilter = [];
   // let dataFilter = [{
@@ -226,7 +221,7 @@ function getdata() {
   }
   setMarker(dataFilter)
 }
-
+//set markers
 var markers = new L.MarkerClusterGroup().addTo(map);
 function setMarker(dataFilter) {
   //marker's color set
@@ -292,8 +287,7 @@ function setMarker(dataFilter) {
           `));
   }
 }
-
-//add sidebarsettingBtn
+//add sidebarsettingBtn=====================
 function addBar() {
   let sideBarBtn = document.querySelector('.leaflet-control-zoom');
   sideBarBtn.innerHTML = `
@@ -311,15 +305,7 @@ function toggleSideBar() {
   let showSideBtnOut = document.querySelector('.showSideBtn--out');
   showSideBtnOut.classList.toggle("sideBtn--ani");
 }
-
-///unset
-function getRecentlocat() {
-  console.log(map.locate());
-}
-
-
-
-
+//click list to show on map=================
 function locatPlaceAddEvent(locatPlace, locatPlaceList) {
   for (let i = 0; i < locatPlace.length; i++) {
     locatPlaceList[i].addEventListener('click', locatPlaceFun);
@@ -333,8 +319,32 @@ function locatPlaceFun(e) {
       locat = [maskData[i].geometry.coordinates[0], maskData[i].geometry.coordinates[1]];
     }
   }
+  //  sidebar._contentContainer.offsetWidth /2
   // console.log(locat);
-  map.setView(locat, 18);
-  // console.log(locat);
+  if (window.innerWidth < 768) {
+    sidebar.toggle();
+  }
+  //fix view center position
+  if (sidebar.isVisible()) {
+    let corner2 = L.latLng(locat[0], locat[1] - 0.0009);
+    let bounds = L.latLngBounds(locat, corner2);
+    map.fitBounds([locat, [corner2]])
+  } else {
+    map.setView(locat, 18);
+  }
+  console.log(locat);
+}
 
+function slideUp() {
+  let selectwrap = document.querySelector('.selectwrap');
+  let searchBtn = document.querySelector('.sidebar__title');
+  let searchNote = document.querySelector('.searchNote');
+  selectwrap.style.display = "none";
+  searchBtn.style.cursor = "pointer";
+  searchNote.style.display = "inline";
+  searchBtn.addEventListener('click', showSearchSection)
+}
+function showSearchSection() {
+  let selectwrap = document.querySelector('.selectwrap');
+  selectwrap.style.display = "block";
 }
