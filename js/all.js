@@ -43,11 +43,10 @@ L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
 //取地區JSON
 function getzoneJSON() {
   let xhr = new XMLHttpRequest();
-  xhr.open('get', '/latlng.json');
+  xhr.open('get', '../latlng.json');
   xhr.send(null);
   xhr.onload = function () {
     zoneData = JSON.parse(xhr.responseText);
-
   }
 }
 //取口罩JSON
