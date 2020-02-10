@@ -43,7 +43,7 @@ L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
 //取地區JSON
 function getzoneJSON() {
   let xhr = new XMLHttpRequest();
-  xhr.open('get', 'https://raw.githubusercontent.com/kevinshu1995/maskmap/gh-pages/latlng.json');
+  xhr.open('get', '../latlng.json');
   xhr.send(null);
   xhr.onload = function () {
     zoneData = JSON.parse(xhr.responseText);
