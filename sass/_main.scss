@@ -7,9 +7,38 @@
 ::selection { 
   background-color: $color-pri;
 }
+//loading====================================
+.loader {
+  font-family: $font-family;
+  @include positionMid(fixed);
+  width: 120px;
+  height: 120px;
+  z-index: 9999;
+  .loader__spinner {
+    @include circleEl(60px);
+    border: 7px solid rgba(255, 255, 255, 0.3);
+    border-top: 7px solid $color-pri;
+    animation: spin 0.7s ease-out infinite;
+    margin: 20px 30px;
+  }
+  @keyframes spin {
+    100% {
+      transform: rotate(360deg);
+    }
+  }
+  .loader__txt {
+    width: 100%;
+    padding-left: 0.3em;
+    text-align: center;
+    font-weight: 600;
+    color: $color-content;
+    @include font-size(18);
+  }
+}
 //maskcolor note=============================
 .colorNote{
   font-family: $font-family;
+  font-weight: 600;
   position: absolute;
   right: 10px;
   top: 10px;
@@ -17,16 +46,51 @@
   background-color: #fff;
   border-radius: 5px;
   box-shadow: 0 1px 5px rgba(0,0,0,0.65);
+  cursor: pointer;
   @include font-size(14);
-  .colorNote__title{
-    padding: .7em .5em;
-    text-align: center;
+  &>h2{
+    border-radius: 5px 5px 0 0;
+    background-color: $color-pri;
+    color: $color-white;
   }
-  .colorNote__danger{
+  .colorNote__title{
+    padding: .8em 1em;
+    text-align: center;
+    line-height: 18px;
+    h2{
+      display: inline-block;
+    }
+    img{
+      display: inline-block;
+      vertical-align: top;
+      margin-right: 4px;
+      height: 18px;
+      width: auto;
+    }
+  }
+  .colorNote__arrow{
+    position: absolute;
+    bottom: -32px;
+    left: 0;
+    right: 0;
+    margin: auto;
+    padding-right: 1px;
+    // transform: translateX(50%);
+    width: 2em;
+    height: 1em;
+    line-height: .8em;
+    border-radius: 5px;
+    box-shadow: 0 1px 5px rgba(0,0,0,0.65);
+    @include font-size(24);
+    text-align: center;
+    background-color: $color-white;
     color: $color-pri;
   }
+  .colorNote__danger{
+    color: orange;
+  }
   .colorNote__nice{
-    color: $color-nice;
+    color: $color-pri;
   }
   .colorNote__none{
     color: $color-unselect;
@@ -93,7 +157,7 @@
     font-weight: 900;
     @include font-size(22);
     letter-spacing: .1em;
-    padding: 16px 24px;
+    padding: 12px 24px;
     color: $color-pri;
     i{
       @include font-size(18);
@@ -235,7 +299,8 @@
   display: flex;
   align-items: center;
   justify-content: space-between;
-  label{
+  .select__maskType__btn{
+    cursor: pointer;
     width: 30%;
     float: left;
   }
@@ -290,6 +355,9 @@
   border-radius: 8px;
   box-shadow: 0 1px 4px $color-unselect;
   cursor: pointer;
+  &:hover{
+    background-color: lighten($color-pri, 33%);
+  }
   .resultList__wrap__tilte{
     display: flex;
     justify-content: space-between;
@@ -347,8 +415,6 @@
     }
   }
 }
-
-
 //map-marker's popup==========================
 .l-popupWrap{
   line-height: 2em;

@@ -19,14 +19,29 @@
 </head>
 
 <body>
-  <!-- <div class="colorNote">
+  <div id="js--loader" class="loader">
+    <div class="loader__spinner"></div>
+    <p class="loader__txt">清點口罩中...</p>
+  </div>
+  <div class="colorNote">
     <h2 class="colorNote__title">口罩數量</h2>
-    <div class="colorNote__wrap">
-      <h2 class="colorNote__title  colorNote__nice">多於50個</h2>
-      <h2 class="colorNote__title  colorNote__danger">少於50個</h2>
-      <h2 class="colorNote__title  colorNote__none">沒有存貨</h2>
-    </div>
-  </div> -->
+    <div class="colorNote__arrow"><i class="fas fa-angle-up"></i></div>
+    <ul class="colorNote__wrap">
+      <li class="colorNote__title">
+        <img src="images/marker--nice.png" alt="marker">
+        <h2 class="colorNote__nice">多於50個</h2>
+      </li>
+      <li class="colorNote__title">
+        <img src="images/marker--danger.png" alt="">
+        <h2 class="colorNote__danger">少於50個</h2>
+      </li>
+      <li class="colorNote__title">
+        <img src="images/marker--none.png" alt="">
+        <h2 class="colorNote__none">沒有存貨</h2>
+      </li>
+    </ul>
+
+  </div>
   <div id="sidebar" class="sidebar">
     <a class="showSideBtn  showSideBtn--in" href="#" role="button"><i class="fas fa-bars"></i></a>
     <div class="sidebar__note">

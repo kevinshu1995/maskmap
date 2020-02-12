@@ -29,16 +29,20 @@ a{
 
 
 // color
-.l-bgco--danger{
-  background-color: $color-pri;
-  color: $color-white;
-}
 .l-bgco--nice{
   background-color: $color-nice;
+  border: 1px solid $color-nice;
   color: $color-white;
 }
+.l-bgco--danger{
+  background-color: $color-bg;
+  border: 1px solid $color-pri;
+  color: $color-pri;
+}
 .l-bgco--none{
-  background-color: $color-unselect;
+  background-color: $color-bg;
+  border: 1px solid darken($color-bg, 15%);
+  color: darken($color-bg, 15%);
 }
 // tools
 // .pdl8 {

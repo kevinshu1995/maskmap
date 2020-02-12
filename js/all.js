@@ -10,7 +10,9 @@ var sidebar = L.control.sidebar('sidebar', {
   position: 'left'
 });
 //function=================================
+loader();
 //set default location
+document.cookie = 'cross-site-cookie=bar; SameSite=None';
 map = L.map('map').setView([23.5, 120.5], 8);
 //maxZoom: 16 as the maximum zoom
 map.locate({ maxZoom: 16 });
@@ -38,7 +40,6 @@ L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
   attribution: '<a href="https://www.openstreetmap.org/">OSM</a>',
   maxZoom: 19,
 }).addTo(map);
-
 //取JSON====================================
 //取地區JSON
 function getzoneJSON() {
@@ -46,7 +47,11 @@ function getzoneJSON() {
   xhr.open('get', 'https://raw.githubusercontent.com/kevinshu1995/maskmap/gh-pages/latlng.json');
   xhr.send(null);
   xhr.onload = function () {
-    zoneData = JSON.parse(xhr.responseText);
+    if (xhr.status == 200 && xhr.readyState == 4) {
+      zoneData = JSON.parse(xhr.responseText);
+    } else {
+      alert('無法讀取資料，請重新整理。');
+    }
   }
 }
 //取口罩JSON
@@ -55,10 +60,15 @@ function getmaskJSON() {
   xhr.open('get', 'https://raw.githubusercontent.com/kiang/pharmacies/master/json/points.json?fbclid=IwAR3XtDf10Tocq8nHU3kLdEtLvAb_yBIPum9i_t2m_wsHMV41ZdufKpWjDu4');
   xhr.send(null);
   xhr.onload = function () {
-    maskData = JSON.parse(xhr.responseText).features;
-    countrySelect();
-    getdata();
-    getList('松山區', '臺北市');
+    if (xhr.status == 200 && xhr.readyState == 4) {
+      loaderDone();
+      maskData = JSON.parse(xhr.responseText).features;
+      countrySelect();
+      getdata();
+      getList('松山區', '臺北市');
+    } else {
+      alert('無法讀取資料，請重新整理。');
+    }
   }
 }
 //篩選重複的市==============================
@@ -131,7 +141,7 @@ function getList(zone, country) {
     let popupBgCoAdult;
     let popupBgCoChild;
     let m_adult = maskDataVal.mask_adult;
-    let m_child = maskDataVal.mask_chlid;
+    let m_child = maskDataVal.mask_child;
     if (m_adult >= 50) {
       popupBgCoAdult = "l-bgco--nice";
     } else if (m_adult < 50 && m_adult != 0) {
@@ -141,7 +151,7 @@ function getList(zone, country) {
     }
     if (m_child >= 50) {
       popupBgCoChild = "l-bgco--nice";
-    } else if (m_child < 50 && m_adult != 0) {
+    } else if (m_child < 50 && m_child != 0) {
       popupBgCoChild = "l-bgco--danger";
     } else {
       popupBgCoChild = "l-bgco--none"
@@ -226,16 +236,24 @@ function getdata() {
 var markers = new L.MarkerClusterGroup().addTo(map);
 function setMarker(dataFilter) {
   //marker's color set
-  let greenIcon = new L.Icon({
-    iconUrl: 'https://cdn.rawgit.com/pointhi/leaflet-color-markers/master/img/marker-icon-2x-green.png',
+  let niceIcon = new L.Icon({
+    iconUrl: 'https://cdn.rawgit.com/pointhi/leaflet-color-markers/master/img/marker-icon-2x-red.png',
     shadowUrl: 'https://cdnjs.cloudflare.com/ajax/libs/leaflet/0.7.7/images/marker-shadow.png',
     iconSize: [25, 41],
     iconAnchor: [12, 41],
     popupAnchor: [1, -34],
     shadowSize: [41, 41]
   });
-  let redIcon = new L.Icon({
-    iconUrl: 'https://cdn.rawgit.com/pointhi/leaflet-color-markers/master/img/marker-icon-2x-red.png',
+  let dangerIcon = new L.Icon({
+    iconUrl: 'https://cdn.rawgit.com/pointhi/leaflet-color-markers/master/img/marker-icon-2x-orange.png',
+    shadowUrl: 'https://cdnjs.cloudflare.com/ajax/libs/leaflet/0.7.7/images/marker-shadow.png',
+    iconSize: [25, 41],
+    iconAnchor: [12, 41],
+    popupAnchor: [1, -34],
+    shadowSize: [41, 41]
+  });
+  let noneIcon = new L.Icon({
+    iconUrl: 'https://cdn.rawgit.com/pointhi/leaflet-color-markers/master/img/marker-icon-2x-black.png',
     shadowUrl: 'https://cdnjs.cloudflare.com/ajax/libs/leaflet/0.7.7/images/marker-shadow.png',
     iconSize: [25, 41],
     iconAnchor: [12, 41],
@@ -250,11 +268,11 @@ function setMarker(dataFilter) {
     let m_child = dataFilter[i].mask_child;
     //判斷popup裡的btn顏色、marker顏色
     if (m_adult + m_child >= 100) {
-      markerColor = greenIcon;
+      markerColor = niceIcon;
     } else if (m_adult + m_child < 100 && m_adult + m_child != 0) {
-      markerColor = redIcon;
+      markerColor = dangerIcon;
     } else {
-      markerColor = redIcon;
+      markerColor = noneIcon;
     }
     if (m_adult >= 50) {
       popupBgCoAdult = "l-bgco--nice";
@@ -333,7 +351,6 @@ function locatPlaceFun(e) {
   } else {
     map.setView(locat, 18);
   }
-  console.log(locat);
 }
 //sidebar slideUp
 function slideUp() {
@@ -375,23 +392,57 @@ function getTime() {
   }
   let curentTime = tYear + ' / ' + tMonth + ' / ' + tDate + ' / ' + weekdays[time.getDay()];
   let idDay = `身分證尾數<mark>${idBuyDay}購買日</mark>`
-  console.log(curentTime);
-  console.log(idDay);
   let str = ` <h3>${curentTime}</h3>
               <h2 class="sidebar__ID">${idDay}</h2>`
   let sideBarTime = document.querySelector('.sidebar__note__time');
   sideBarTime.innerHTML = str;
 }
+//loader
+function loader() {
+  document.querySelector("body").style.visibility = "hidden";
+  document.querySelector("body").style.overflow = "hidden";
+  document.querySelector("#js--loader").style.visibility = "visible";
+}
+function loaderDone() {
+  document.querySelector("#js--loader").style.display = "none";
+  document.querySelector("body").style.visibility = "visible";
+  document.querySelector("body").style.overflow = "auto";
+}
 //colorNote===================================================
-// function colorNoteInit() {
-//   let wrap = document.querySelector('.colorNote__wrap');
-//   let outter = document.querySelector('.colorNote');
-//   wrapdisplay();
-//   outter.addEventListener('click', wrapdisplayBlock)
-//   function wrapdisplay() { wrap.style.display = "none"; }
-//   function wrapdisplayBlock() {
-//     wrap.style.display = "block";
-//     outter.addEventListener('click', wrapdisplayNone())
-//     function wrapdisplayNone() { wrap.style.display = "none"; }
-//   }
-// }
+let outter = document.querySelector('.colorNote');
+outter.addEventListener('click', colorNotedisplay);
+// outter.click();
+function colorNotedisplay(e) {
+  let wrap = document.querySelector('.colorNote__wrap');
+  let child = e.target.offsetParent.lastElementChild.firstElementChild;
+  let str = `
+      <li class="colorNote__title">
+        <img src="images/marker--nice.png" alt="marker">
+        <h2 class="colorNote__nice">多於50個</h2>
+      </li>
+      <li class="colorNote__title">
+        <img src="images/marker--danger.png" alt="">
+        <h2 class="colorNote__danger">少於50個</h2>
+      </li>
+      <li class="colorNote__title">
+        <img src="images/marker--none.png" alt="">
+        <h2 class="colorNote__none">沒有存貨</h2>
+      </li>
+  `
+  let borderEl = document.querySelector('.colorNote__title')
+  let arrow = document.querySelector('.fa-angle-up')
+  if (wrap.innerHTML == "") {
+    wrap.innerHTML = str
+    borderEl.style.borderBottomRightRadius = "0px";
+    borderEl.style.borderBottomLeftRadius = "0px";
+    arrow.style.transform = "rotate(0deg)";
+    arrow.style.lineHeight = "1em";
+  } else {
+    wrap.innerHTML = "";
+    borderEl.style.borderBottomRightRadius = "5px";
+    borderEl.style.borderBottomLeftRadius = "5px";
+    arrow.style.transform = "rotate(180deg)";
+    arrow.style.lineHeight = "1.1em";
+
+  }
+}
