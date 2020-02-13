@@ -38,7 +38,7 @@ maskFilterEvent();
 // colorNoteInit();
 //建立地圖==================================
 L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-  attribution: '<a href="https://www.openstreetmap.org/">OSM</a>',
+  attribution: '<a href="https://www.openstreetmap.org/">OSM</a> | Made by Kevin Hsu',
   maxZoom: 19,
 }).addTo(map);
 //取JSON====================================
@@ -222,6 +222,7 @@ function getList(zone, country) {
 }
 //過濾大人、小孩口罩
 function getListFilter(maskFilterList) {
+  if (countryForm.value == "" || zoneForm.value == "") { return }
   let str = `<li class="resultList__defaultList">-- 以下為${countryForm.value}${zoneForm.value}內的藥局 --</li>`;
   for (let i = 0; i < maskFilterList.length; i++) {
     let maskDataVal = maskFilterList[i];
