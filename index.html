@@ -13,7 +13,6 @@
     crossorigin="" />
   <link rel="stylesheet" href="https://unpkg.com/leaflet.markercluster@1.4.1/dist/MarkerCluster.Default.css"
     crossorigin="" />
-
   <!-- <link rel="stylesheet" href="source/L.Control.Sidebar.css" /> -->
   <link rel="stylesheet" href="dist/style/all.min.css">
 </head>
@@ -40,11 +39,10 @@
         <h2 class="colorNote__none">沒有存貨</h2>
       </li>
     </ul>
-
   </div>
   <div id="sidebar" class="sidebar">
     <a class="showSideBtn  showSideBtn--in" href="#" role="button"><i class="fas fa-bars"></i></a>
-    <div class="sidebar__note">
+    <div class="sidebar__note  cursorDefault">
       <div class="sidebar__note__time">
         <h3>2020 / 02 / 10 / 星期三</h3>
         <h2 class="sidebar__ID">身分證尾數<mark>奇數購買日</mark></h2>
@@ -78,16 +76,12 @@
         </fieldset>
         <form class="select__maskType">
           <label for="mask__adult" class="select__maskType__btn">
-            <input type="radio" value="mask__adult" name="maskType" id="mask__adult">
+            <input type="radio" value="mask__adult" name="maskType" id="mask__adult" class="maskFilter">
             <h2>大人口罩</h2>
           </label>
           <label for="mask__child" class="select__maskType__btn">
-            <input type="radio" value="mask__child" name="maskType" id="mask__child">
+            <input type="radio" value="mask__child" name="maskType" id="mask__child" class="maskFilter">
             <h2>兒童口罩</h2>
-          </label>
-          <label for="mask__all" class="select__maskType__btn">
-            <input type="radio" value="mask__all" name="maskType" id="mask__all">
-            <h2>全部口罩</h2>
           </label>
         </form>
       </div>

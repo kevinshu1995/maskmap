@@ -5,6 +5,7 @@ var popup;
 var countryForm = document.getElementById('countryForm');
 var zoneForm = document.getElementById('zoneForm');
 var resultList = document.querySelector('.resultList');
+var maskFilter = document.querySelectorAll('.maskFilter')
 //取得sidebar
 var sidebar = L.control.sidebar('sidebar', {
   position: 'left'
@@ -12,7 +13,6 @@ var sidebar = L.control.sidebar('sidebar', {
 //function=================================
 loader();
 //set default location
-document.cookie = 'cross-site-cookie=bar; SameSite=None';
 map = L.map('map').setView([23.5, 120.5], 8);
 //maxZoom: 16 as the maximum zoom
 map.locate({ maxZoom: 16 });
@@ -34,6 +34,7 @@ addBar();
 getTime()
 getmaskJSON();
 getzoneJSON();
+maskFilterEvent();
 // colorNoteInit();
 //建立地圖==================================
 L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
@@ -133,6 +134,46 @@ function getlocationView(e) {
   map.setView(latlng, 15);
   getList(zone, country);
 }
+//篩選口罩數量 | 監聽 =======================
+function maskFilterEvent() {
+  for (let i = 0; i < maskFilter.length; i++) {
+    maskFilter[i].addEventListener('click', maskQueue)
+  }
+}
+//篩選口罩數量 | 重新排順序
+function maskQueue(e) {
+  let btnVal = String(e.target.value);
+  let countryVal = countryForm.value;
+  let zoneVal = zoneForm.value;
+  let maskFilterList = [];
+  for (let i = 0; i < maskData.length; i++) {
+    if (maskData[i].properties.county == countryVal && maskData[i].properties.town == zoneVal) {
+      maskFilterList.push({
+        mask_adult: maskData[i].properties.mask_adult,
+        mask_child: maskData[i].properties.mask_child,
+        mask_all: maskData[i].properties.mask_child + maskData[i].properties.mask_adult,
+        name: maskData[i].properties.name,
+        phone: maskData[i].properties.phone,
+        address: maskData[i].properties.address
+      });
+    }
+  }
+  // console.log(maskFilterList);
+  // console.log(btnVal == 'mask__child');
+  if (btnVal == 'mask__child') {
+    maskFilterList = maskFilterList.sort(function (a, b) {
+      return a.mask_child > b.mask_child ? -1 : 1;
+    });
+    console.log('1')
+    getListFilter(maskFilterList)
+  } else {
+    maskFilterList = maskFilterList.sort(function (a, b) {
+      return a.mask_adult > b.mask_adult ? -1 : 1;
+    });
+    console.log('2')
+    getListFilter(maskFilterList)
+  }
+}
 //藥局列表
 function getList(zone, country) {
   let str = `<li class="resultList__defaultList">-- 以下為${country}${zone}內的藥局 --</li>`;
@@ -173,6 +214,50 @@ function getList(zone, country) {
     </li>
     `
     }
+  }
+  resultList.innerHTML = str;
+  var locatPlace = document.querySelectorAll('.locatPlace');
+  var locatPlaceList = document.querySelectorAll('.resultList__wrap');
+  locatPlaceAddEvent(locatPlace, locatPlaceList);
+}
+//過濾大人、小孩口罩
+function getListFilter(maskFilterList) {
+  let str = `<li class="resultList__defaultList">-- 以下為${countryForm.value}${zoneForm.value}內的藥局 --</li>`;
+  for (let i = 0; i < maskFilterList.length; i++) {
+    let maskDataVal = maskFilterList[i];
+    let popupBgCoAdult;
+    let popupBgCoChild;
+    let m_adult = maskDataVal.mask_adult;
+    let m_child = maskDataVal.mask_child;
+    if (m_adult >= 50) {
+      popupBgCoAdult = "l-bgco--nice";
+    } else if (m_adult < 50 && m_adult != 0) {
+      popupBgCoAdult = "l-bgco--danger";
+    } else {
+      popupBgCoAdult = "l-bgco--none"
+    }
+    if (m_child >= 50) {
+      popupBgCoChild = "l-bgco--nice";
+    } else if (m_child < 50 && m_child != 0) {
+      popupBgCoChild = "l-bgco--danger";
+    } else {
+      popupBgCoChild = "l-bgco--none"
+    }
+    str += `
+    <li class="resultList__wrap">
+      <div class="resultList__wrap__tilte">
+        <h2 class="locatPlace">${maskDataVal.name}</h2>
+        <a href="https://www.google.com.tw/maps/place/${maskDataVal.name}" class="address" target="_blank"><i
+          class="fas fa-directions"></i></a>
+      </div>
+      <h3><i class="fas fa-map-marker-alt"></i> 地址 : ${maskDataVal.address}</h3>
+      <h3><i class="fas fa-phone-alt"></i> 電話 : <a href="tel:${maskDataVal.phone}">${maskDataVal.phone}</a></h3>
+      <ul class="list__maskwrap">
+        <li class="${popupBgCoAdult}">成人口罩 ${maskDataVal.mask_adult}個</li>
+        <li class="${popupBgCoChild}">兒童口罩 ${maskDataVal.mask_child}個</li>
+      </ul>
+    </li>
+    `
   }
   resultList.innerHTML = str;
   var locatPlace = document.querySelectorAll('.locatPlace');
@@ -411,7 +496,7 @@ function loaderDone() {
 //colorNote===================================================
 let outter = document.querySelector('.colorNote');
 outter.addEventListener('click', colorNotedisplay);
-// outter.click();
+outter.click();
 function colorNotedisplay(e) {
   let wrap = document.querySelector('.colorNote__wrap');
   let child = e.target.offsetParent.lastElementChild.firstElementChild;

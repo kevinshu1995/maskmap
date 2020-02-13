@@ -7,6 +7,9 @@
 ::selection { 
   background-color: $color-pri;
 }
+.cursorDefault{
+  cursor: default;
+}
 //loading====================================
 .loader {
   font-family: $font-family;
@@ -154,6 +157,7 @@
     // overflow: scroll!important;
   }
   .sidebar__title{
+    user-select: none;
     font-weight: 900;
     @include font-size(22);
     letter-spacing: .1em;
@@ -179,16 +183,12 @@
 .sidebar__note{
   width: 100%;
   padding: 16px 24px;
-  // color: $color-white;
-  // color: #F8F4E3;
+  user-select: none;
   // color: #FFA69E; //可以做附註
   color: #FFddcc; 
   background: linear-gradient(45deg,$color-pri,$color-pri-s);
   mark{
     font-weight: 900;
-    // color: #FFE19C;
-    // color: #F5F749;
-    // color: #FFFD98;
     color: $color-white;
     background-color: transparent;
     @include font-size(24);
@@ -239,9 +239,14 @@
   overflow: hidden;
   padding: 0 24px;
   .select__row{//包裹 select zone
+    width: 100%;
     border: 1px solid $color-unselect;
     border-radius: 3em;
     margin-bottom: 18px;
+    float: left;
+    @include mobile{
+      margin-bottom: 14px;
+    }
     &:hover{
       box-shadow: 0 0 1px $color-content;
     }
@@ -285,6 +290,10 @@
     background-color: transparent;
     border-radius: 4px;
     cursor: pointer;
+    @include mobile{
+      padding: 0 1.5em .5em;
+      @include font-size(14);
+    }
     ::-ms-expand{
       display: none; 
     }
@@ -295,14 +304,17 @@
 }
 //sidebar-搜尋區-口罩=============
 .select__maskType{
-  margin-bottom: 18px;
+  width: 100%;
+  margin-top: 4px;
+  margin-bottom: 24px;
   display: flex;
   align-items: center;
   justify-content: space-between;
+  float: left;
   .select__maskType__btn{
     cursor: pointer;
-    width: 30%;
-    float: left;
+    width: 48%;
+    user-select: none;
   }
   h2{
     display: inline-block;
@@ -313,6 +325,9 @@
     color: darken($color-unselect, 40%);
     border-radius: 2em;
     border: 1px solid $color-unselect;
+    @include mobile{
+      padding: .3em 0;
+    }
     &:hover{
       box-shadow: 0 0 1px $color-content;
     }
@@ -341,6 +356,7 @@
     overflow: scroll;
   }
   .resultList__defaultList{
+    user-select: none;
     margin: .5em 0 .8em;
     letter-spacing: .1em;
     text-align: center;
@@ -432,6 +448,10 @@
     padding: .3em .5em;
     border-radius: .4em;
     @include font-size(18);
+    @include mobile{
+      padding: .3em .2em;
+      @include font-size(14);
+    }
   }
   
   .l-popup__detail{
@@ -447,4 +467,9 @@
 .leaflet-container a.leaflet-popup-close-button{
   top: 5px;
   right: 5px;
+}
+.leaflet-popup-content{
+  @include mobile{
+    width: 250px!important;
+  }
 }

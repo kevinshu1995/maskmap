@@ -1,9 +1,9 @@
 // media
-// @mixin mobile {
-//   @media (max-width: 320px) {
-//     @content;
-//   }
-// }
+@mixin mobile {
+  @media (max-width: 320px) {
+    @content;
+  }
+}
 // @mixin mobileLarge {
 //   @media (min-width: 575px) {
 //     @content;
